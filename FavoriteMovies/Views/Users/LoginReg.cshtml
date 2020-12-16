@@ -1,46 +1,21 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset='utf-8'>
-        <title>Hello!</title>
-    </head>
-    <body>
 
-        <h1>Login/Register</h1>
+<head>
+    <meta charset='utf-8'>
+    <title>Hello!</title>
+</head>
 
-        @model User
-        <form asp-action ="Register" method="post">
-            <div class="form-group">
-                <label asp-for = "FirstName">First Name</label>
-                <input asp-for = "FirstName" class="form-control">
-                <span asp-validation-for="FirstName" class="text-danger"></span>
-            </div>
+<body>
 
-            <div class="form-group">
-                <label asp-for = "LastName">Last Name</label>
-                <input asp-for = "LastName" class="form-control">
-                <span asp-validation-for="LastName" class="text-danger"></span>
-            </div>
+    <partial name="RegistrationFormPartial.cshtml"></partial>
 
-            <div class="form-group">
-                <label asp-for = "Email"> Email </label>
-                <input asp-for = "Email" class="form-control">
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
+    <partial name="LoginFormPartial.cshtml"></partial>
 
-            <div class="form-group">
-                <label asp-for = "Password"> PS </label>
-                <input asp-for = "Password" class="form-control">
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
+    @* This page use partial to replace the _RegistrationForm and _LoginForm *@
+    @* because one page can only have one @model User or @model LoginUser *@
+    @* So we need to seperate the register and login into 2 cshtml files *@
+    @* and replace the file with <partial> *@
+</body>
 
-            <div class="form-group">
-                <label asp-for = "PasswordConfirmation"> PS Confirm </label>
-                <input asp-for = "PasswordConfirmation" class="form-control">
-                <span asp-validation-for="PasswordConfirmation" class="text-danger"></span>
-            </div>
-            <button>Submit</button>
-        </form>
-        
-    </body>
 </html>

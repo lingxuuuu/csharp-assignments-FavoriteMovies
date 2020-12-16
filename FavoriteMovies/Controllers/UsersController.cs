@@ -1,15 +1,15 @@
 using System;
 using System.Linq; // allows us to access query methods(FirstOrDefault)
 using Microsoft.AspNetCore.Mvc;
-using FavoriteMovies.Models; 
+using FavoriteMovies.Models;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Http; 
+using Microsoft.AspNetCore.Http;
 
-namespace FavoriteMovies.Controllers   
+namespace FavoriteMovies.Controllers
 {
-    public class UsersController : Controller   
+    public class UsersController : Controller
     {
-        
+
         //DB setup
         private readonly MyContext _context;
 
@@ -28,18 +28,18 @@ namespace FavoriteMovies.Controllers
             return View();
         }
 
-        [HttpPost("users")]     
+        [HttpPost("users")]
         public IActionResult Register(User userToCreate)
         {
 
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View("LoginReg");
             }
 
             var existingUser = _context
                 .Users
-                .FirstOrDefault(user => user.Email == userToCreate.Email );   
+                .FirstOrDefault(user => user.Email == userToCreate.Email);
 
 
             if (existingUser != null) //if there is a existing user
@@ -51,7 +51,7 @@ namespace FavoriteMovies.Controllers
             //hash the password
             PasswordHasher<User> Hasher = new PasswordHasher<User>();
             userToCreate.Password = Hasher.HashPassword(userToCreate, userToCreate.Password);
-            
+
             //Save the user to the DB
             _context.Add(userToCreate);
             _context.SaveChanges();
@@ -62,8 +62,59 @@ namespace FavoriteMovies.Controllers
             // note that we'are sending the user to a different controller
             return RedirectToAction("Dashboard", "Home");
 
-                
+
         }
-    
+
+        [HttpPost("users/login")]
+        public IActionResult Login(LoginUser userToLogin)
+        {
+            if (ModelState.IsValid)
+            {
+                //     return View("LoginReg");
+                // }
+
+                // If inital ModelState is valid, query for a user with provided email
+                var foundUser = _context.Users.FirstOrDefault(user => user.Email == userToLogin.LoginEmail);
+
+                // If no user exists with provided email
+                if (foundUser == null)
+                {
+                    // Add an error to ModelState and return to View!
+                    Console.WriteLine("User wasn't found");
+                    ModelState.AddModelError("LoginEmail", "Invalid Email/Password");
+                    return View("LoginReg");
+                }
+
+                // Initialize hasher object
+                var hasher = new PasswordHasher<LoginUser>();
+
+                // verify provided password against hash stored in db
+                var result = hasher.VerifyHashedPassword(userToLogin, foundUser.Password, userToLogin.LoginPassword);
+
+                // result can be compared to 0 for failure
+                if (result == 0)
+                {
+                    // handle failure (this should be similar to how "existing email" is handled)
+                    // Add an error to ModelState and return to View!
+                    Console.WriteLine("Password does not match");
+                    ModelState.AddModelError("LoginPassword", "Invalid Email/Password");
+                    return View("LoginReg");
+                }
+
+                //put the user ID into session
+                HttpContext.Session.SetInt32("UserId", foundUser.UserId);
+
+            }
+            //redirect 
+            return RedirectToAction("Dashboard", "Home");
+        }
+
+        [HttpGet("users/logout")]
+        public IActionResult Logout()
+        {   
+            //clear the seesion
+            HttpContext.Session.Clear();
+            return RedirectToAction("LoginReg");
+        }
     }
 }

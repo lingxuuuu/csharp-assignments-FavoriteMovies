@@ -54,3 +54,5 @@ C:\Users\lingx\C#\assignments\FavoriteMovies\FavoriteMovies\obj\Debug\netcoreapp
 C:\Users\lingx\C#\assignments\FavoriteMovies\FavoriteMovies\obj\Debug\netcoreapp3.1\FavoriteMovies.Views.pdb
 C:\Users\lingx\C#\assignments\FavoriteMovies\FavoriteMovies\obj\Debug\netcoreapp3.1\Razor\Views\_ViewImports.cshtml.g.cs
 C:\Users\lingx\C#\assignments\FavoriteMovies\FavoriteMovies\obj\Debug\netcoreapp3.1\Razor\Views\Home\Dashboard.cshtml.g.cs
+C:\Users\lingx\C#\assignments\FavoriteMovies\FavoriteMovies\obj\Debug\netcoreapp3.1\Razor\Views\Users\LoginFormPartial.cshtml.g.cs
+C:\Users\lingx\C#\assignments\FavoriteMovies\FavoriteMovies\obj\Debug\netcoreapp3.1\Razor\Views\Users\RegistrationFormPartial.cshtml.g.cs
