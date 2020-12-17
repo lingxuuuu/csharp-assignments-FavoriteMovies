@@ -35,7 +35,15 @@
         @*Many to many relationship, need to have .include() in controller to use movie.Likes here*@
         <td>@movie.Likes.Count</td>
         <td>
-            @if(movie.Likes.Any(Like => Like.UserId == ViewBag.User.UserId)) //Error can be fixed by replace the var to Movie
+            @if(movie.PostedBy.UserId == ViewBag.User.UserId)
+            {
+                @*Can delete the movie*@
+                <form asp-action="DeleteMovie" asp-route-id=@movie.MovieId method="post">
+                    <button>Delete</button>
+                </form>
+            }
+            @*If current user like this movie*@
+            else if(movie.Likes.Any(Like => Like.UserId == ViewBag.User.UserId)) //Error can be fixed by replace the var to Movie
             {
                 <form asp-action="RemoveLikeFromMovie" asp-route-id="@movie.MovieId" method="post">
                     <button>Unlike</button>
@@ -47,12 +55,6 @@
                     <button>Like</button>
                 </form>
             }
-        </td>
-        
-        <td>
-            <form action="">
-            <button>Like</button>
-            </form>
         </td>
         </tr>
 }

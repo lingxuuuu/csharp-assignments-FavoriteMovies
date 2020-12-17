@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -5,6 +6,11 @@
     <meta charset='utf-8'>
     <title>Hello!</title>
 </head>
+
+<span>Hi, @ViewBag.User.FirstName @ViewBag.User.LastName!</span>
+
+<a asp-action="Dashboard">Dashboard</a> ||
+<a asp-action="Logout" asp-controller="Users">Logout</a>
 
 <body>
     @model Movie

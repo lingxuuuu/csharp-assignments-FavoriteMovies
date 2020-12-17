@@ -1,6 +1,22 @@
 @*ViewBag.Movie = _context
-    .Movies
-    .Find(id);*@
+            .Movies
+            .Include(movie => movie.PostedBy)
+            .Include(movie => movie.Likes)
+                .ThenInclude(like => like.UserWhoLikes)
+            .FirstOrDefault(movie => movie.MovieId == id);*@
+
+@*ViewBag.User = _context
+            .Users
+            .Find(HttpContext.Session.GetInt32("UserId"));*@
+
+@{
+    Movie movie = ViewBag.Movie;
+}
+
+<span>Hi, @ViewBag.User.FirstName @ViewBag.User.LastName!</span>
+
+<a asp-action="Dashboard">Dashboard</a> ||
+<a asp-action="Logout" asp-controller="Users">Logout</a>
 
 <h1>@ViewBag.Movie.Title</h1>
 
@@ -12,4 +28,34 @@
 @*PosteBy is one to many relationship, we need to set up in controller using include() before using it*@
 <p>Posted By: @ViewBag.Movie.PostedBy.FirstName</p>
 
+<h2>Fans</h2>
+
+<ul>
+    @foreach(Like like in @ViewBag.Movie.Likes)
+    {
+        <li>@like.UserWhoLikes.FirstName</li>
+    }
+</ul>
+
 <img src="@ViewBag.Movie.ImageUrl" alt="@ViewBag.Movie.Title">
+
+@if(movie.PostedBy.UserId == ViewBag.User.UserId)
+{
+    @*Can delete the movie*@
+    <form asp-action="DeleteMovie" asp-route-id=@movie.MovieId method="post">
+        <button>Delete</button>
+    </form>
+}
+@*If current user like this movie*@
+else if(movie.Likes.Any(Like => Like.UserId == ViewBag.User.UserId)) //Error can be fixed by replace the var to Movie
+{
+    <form asp-action="RemoveLikeFromMovie" asp-route-id="@movie.MovieId" method="post">
+        <button>Unlike</button>
+    </form>
+}
+else
+{
+    <form asp-action="AddLikeToMovie" asp-route-id="@movie.MovieId" method="post">
+        <button>Like</button>
+    </form>
+}
