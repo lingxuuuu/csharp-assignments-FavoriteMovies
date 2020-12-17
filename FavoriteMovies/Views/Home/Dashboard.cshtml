@@ -2,8 +2,59 @@
     .Users
     .Find(userId); *@
 
+@* ViewBag.AllMovies = _context
+    .Movies
+    .ToList();*@
+
 <p>Hi, @ViewBag.User.FirstName @ViewBag.User.LastName!</p>
 <h1>Dashboard is here</h1>
 
 @* note that we are senbding to a different controller *@
 <a asp-action="Logout" asp-controller="Users">Logout</a>
+
+  <table class="table table-striped">
+    <tr>
+        <th>Title</th>
+        <th>Star</th>
+        <th>Release Date</th>
+        <th>Posted By</th>
+        <th>Likes</th>
+        <th>Actions</th>
+    </tr>
+
+ @foreach (Movie movie in ViewBag.AllMovies)
+{
+    <tr>
+        <td> <a asp-action="MoviePage" asp-route-id = "@movie.MovieId">@movie.Title</a> </td>
+        <td>@movie.Star</td>
+        <td>@movie.ReleaseDate.ToString("MMMM dd")</td>
+
+        @*One to many relationship, get the posted user's firstname*@
+        <td>@movie.PostedBy.FirstName</td>
+
+        @*Many to many relationship, need to have .include() in controller to use movie.Likes here*@
+        <td>@movie.Likes.Count</td>
+        <td>
+            @if(movie.Likes.Any(Like => Like.UserId == ViewBag.User.UserId)) //Error can be fixed by replace the var to Movie
+            {
+                <form asp-action="RemoveLikeFromMovie" asp-route-id="@movie.MovieId" method="post">
+                    <button>Unlike</button>
+                </form>
+            }
+            else
+            {
+                <form asp-action="AddLikeToMovie" asp-route-id="@movie.MovieId" method="post">
+                    <button>Like</button>
+                </form>
+            }
+        </td>
+        
+        <td>
+            <form action="">
+            <button>Like</button>
+            </form>
+        </td>
+        </tr>
+}
+
+<a asp-action="NewMoviePage">Add a Movie</a>

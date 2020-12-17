@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema; //let us use [NotMapped] on PSconfirmation
-
+using System.Collections.Generic; //let us use List<movie>
 
 namespace FavoriteMovies.Models
 {
@@ -36,5 +36,12 @@ namespace FavoriteMovies.Models
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
+        
+        // This is a one to many relationship: One user can post many movies
+        // List<Movie> is the relathionship between User and Movie User.PostedMovies
+        //this will require .Include if we want the object
+        public List<Movie> PostedMovies {get; set;}
+        
+        public List<Like> Likes {get; set;}
     }
 }

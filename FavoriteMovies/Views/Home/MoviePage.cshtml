@@ -1,0 +1,15 @@
+@*ViewBag.Movie = _context
+    .Movies
+    .Find(id);*@
+
+<h1>@ViewBag.Movie.Title</h1>
+
+<p>Starring: @ViewBag.Movie.Star</p>
+
+<p>Released Date: @ViewBag.Movie.ReleaseDate.ToString("MMMM dd")</p>
+
+
+@*PosteBy is one to many relationship, we need to set up in controller using include() before using it*@
+<p>Posted By: @ViewBag.Movie.PostedBy.FirstName</p>
+
+<img src="@ViewBag.Movie.ImageUrl" alt="@ViewBag.Movie.Title">

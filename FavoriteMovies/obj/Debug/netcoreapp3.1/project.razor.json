@@ -14392,6 +14392,11 @@
   "RootNamespace": "FavoriteMovies",
   "Documents": [
     {
+      "FilePath": "c:\\Users\\lingx\\C#\\assignments\\FavoriteMovies\\FavoriteMovies\\Views\\Home\\MoviePage.cshtml",
+      "TargetPath": "Views\\Home\\MoviePage.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Users\\lingx\\C#\\assignments\\FavoriteMovies\\FavoriteMovies\\Views\\Users\\RegistrationFormPartial.cshtml",
       "TargetPath": "Views\\Users\\RegistrationFormPartial.cshtml",
       "FileKind": "mvc"
@@ -14404,6 +14409,11 @@
     {
       "FilePath": "c:\\Users\\lingx\\C#\\assignments\\FavoriteMovies\\FavoriteMovies\\Views\\Home\\Dashboard.cshtml",
       "TargetPath": "Views\\Home\\Dashboard.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Users\\lingx\\C#\\assignments\\FavoriteMovies\\FavoriteMovies\\Views\\Home\\NewMoviePage.cshtml",
+      "TargetPath": "Views\\Home\\NewMoviePage.cshtml",
       "FileKind": "mvc"
     },
     {

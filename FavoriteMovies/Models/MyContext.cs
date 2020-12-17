@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+
 namespace FavoriteMovies.Models
 {
     // the MyContext class representing a session with our MySQL 
@@ -8,5 +9,9 @@ namespace FavoriteMovies.Models
         public MyContext(DbContextOptions options) : base(options) { }
         // the "Monsters" table name will come from the DbSet variable name
         public DbSet<User> Users { get; set; }
+
+        public DbSet<Movie> Movies { get; set; }
+
+        public DbSet<Like> Likes { get; set; }
     }
 }
